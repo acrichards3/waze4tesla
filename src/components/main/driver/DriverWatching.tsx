@@ -13,7 +13,6 @@ interface DriverWatchingProps {
 export default function DriverWatching(props: DriverWatchingProps) {
   const [driverAngle, setDriverAngle] = React.useState<number>(0);
 
-  const determineAngle = () => {};
   return (
     <div
       className={styles.container}
