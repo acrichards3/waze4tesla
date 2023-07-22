@@ -1,0 +1,11 @@
+@import '~/components/Variables.scss';
+
+.driver {
+  display: flex;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 15px 30px 15px;
+  border-color: transparent transparent $driverColor transparent;
+  justify-content: center;
+}

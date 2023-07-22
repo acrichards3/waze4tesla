@@ -1,9 +1,14 @@
 import React from 'react';
 
-export default function WazeMap() {
+interface WazeMapProps {
+  userLat: number;
+  userLon: number;
+}
+
+export default function WazeMap(props: WazeMapProps) {
   return (
     <iframe
-      src="https://embed.waze.com/iframe?zoom=12&lat=45.6906304&lon=-120.810983"
+      src={`https://embed.waze.com/iframe?zoom=100&lat=${props.userLat}&lon=${props.userLon}`}
       width="100%"
       height="100%"
     ></iframe>
