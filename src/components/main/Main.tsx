@@ -1,6 +1,4 @@
 import React from 'react';
-import Driver from '../common/icons/Driver';
-import HazardDetector from '../common/hazardDetector/HazardDetector';
 import DriverWatching from './driver/DriverWatching';
 import WazeMap from '../common/maps/WazeMap';
 import styles from './Main.module.scss';
@@ -18,14 +16,14 @@ export default function Main() {
     undefined
   );
 
-  const successCallback = (geolocation: any) => {
+  const successCallback = (geolocation: GeolocationPosition) => {
     setUserLocation({
       lat: geolocation.coords.latitude,
       lon: geolocation.coords.longitude,
     });
   };
 
-  const errorCallback = (error: any) => {
+  const errorCallback = (error: GeolocationPositionError) => {
     console.log(error);
   };
 
@@ -42,6 +40,7 @@ export default function Main() {
         errorCallback,
         geolocationOptions
       );
+      setPrevLocation(userLocation);
     }
   }, []);
 
