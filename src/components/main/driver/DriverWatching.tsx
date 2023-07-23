@@ -18,6 +18,7 @@ interface DriverWatchingProps {
 }
 
 export default function DriverWatching(props: DriverWatchingProps) {
+  const { currLat, currLon, prevLat, prevLon } = props;
   const [driverAngle, setDriverAngle] = React.useState<number>(0);
   const { componentRef, getCoordinates } = useComponentCoordinates();
 
@@ -27,7 +28,16 @@ export default function DriverWatching(props: DriverWatchingProps) {
       console.log('triangle coordinates', coordinates);
       props.setPosition(coordinates);
     }
-  }, [props.currLat, props.currLon]);
+    if (prevLat && prevLon) {
+      const angle =
+        (Math.atan2(currLon - prevLon, currLat - prevLat) * 180) / Math.PI;
+      if (angle !== driverAngle) {
+        setDriverAngle(angle);
+      }
+    } else {
+      setDriverAngle(0);
+    }
+  }, [currLat, currLon]);
 
   return (
     <div
@@ -37,12 +47,7 @@ export default function DriverWatching(props: DriverWatchingProps) {
       <div ref={componentRef}>
         <HazardDetector />
       </div>
-      <Driver
-        currLat={props.currLat}
-        currLon={props.currLon}
-        prevLat={props.prevLat}
-        prevLon={props.prevLon}
-      />
+      <Driver />
     </div>
   );
 }

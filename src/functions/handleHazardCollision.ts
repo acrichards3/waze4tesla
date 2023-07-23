@@ -35,6 +35,7 @@ const handleHazardCollision = (box: Box, triangle: Triangle): boolean => {
 
   const getTriangleCorners = (triangle: Triangle): Point[] => {
     const { x, y, width, height } = triangle;
+    // triangle is upside down + calculates based on the center point of the triangle
     return [
       { x: x - width / 2, y: y - height / 2 }, // bottom-left point
       { x: x + width / 2, y: y - height / 2 }, // bottom-right point
