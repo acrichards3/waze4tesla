@@ -9,3 +9,12 @@
   border-color: transparent transparent $driverColor transparent;
   justify-content: center;
 }
+
+.square {
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  position: absolute;
+  margin-left: -95px;
+  margin-top: -600px;
+}
