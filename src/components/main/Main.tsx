@@ -4,6 +4,7 @@ import WazeMap from '../common/maps/WazeMap';
 import TestSquare from '../common/icons/TestSquare';
 import useComponentCoordinates from '~/functions/useComponentCoordinates';
 import handleHazardCollision from '~/functions/handleHazardCollision';
+import Loading from '../common/icons/Loading';
 import styles from './Main.module.scss';
 
 interface Location {
@@ -12,20 +13,10 @@ interface Location {
 }
 
 export default function Main() {
-  const [userLocation, setUserLocation] = React.useState<Location | undefined>(
-    undefined
-  );
-  const [prevLocation, setPrevLocation] = React.useState<Location | undefined>(
-    undefined
-  );
-
-  const [hazardDetectorPosition, setHazardDetectorPosition] = React.useState<{
-    x: number;
-    y: number;
-  }>({ x: 0, y: 0 });
-  const [iconPositions, setIconPositions] = React.useState<
-    { x: number; y: number }[]
-  >([{ x: 1, y: 1 }]);
+  const [userLocation, setUserLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
+  const [prevLocation, setPrevLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
+  const [hazardDetectorPosition, setHazardDetectorPosition] = React.useState<{x: number; y: number;}>({ x: 0, y: 0 }); // prettier-ignore
+  const [iconPositions, setIconPositions] = React.useState<{ x: number; y: number }[]>([{ x: 0, y: 0 }]); // prettier-ignore
 
   const { componentRef, getCoordinates } = useComponentCoordinates();
   const isMountedRef = React.useRef(false);
@@ -128,5 +119,5 @@ export default function Main() {
     );
   }
 
-  return <div>Loading...</div>;
+  return <Loading />;
 }

@@ -15,6 +15,16 @@
   height: 30px;
   background-color: red;
   position: absolute;
-  margin-left: -95px;
+  margin-left: -80px;
   margin-top: -600px;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  font-size: 36px;
+  color: #88bbfd;
+  font-weight: bold;
 }
