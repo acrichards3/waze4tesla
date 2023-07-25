@@ -4,6 +4,7 @@ import WazeMap from '../common/maps/WazeMap';
 import TestSquare from '../common/icons/TestSquare';
 import useComponentCoordinates from '~/functions/useComponentCoordinates';
 import handleHazardCollision from '~/functions/handleHazardCollision';
+import parseHazards from '~/functions/parseHazards';
 import Loading from '../common/icons/Loading';
 import styles from './Main.module.scss';
 
@@ -13,6 +14,9 @@ interface Location {
 }
 
 export default function Main() {
+  // const location1 = { lat: 35.967281, lon: -79.056969 };
+  // const location2 = { lat: 35.966545, lon: -79.057515 };
+  // const location3 = { lat: 35.966154, lon: -79.058889 };
   const [userLocation, setUserLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
   const [prevLocation, setPrevLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
   const [hazardDetectorPosition, setHazardDetectorPosition] = React.useState<{x: number; y: number;}>({ x: 0, y: 0 }); // prettier-ignore
@@ -20,6 +24,18 @@ export default function Main() {
 
   const { componentRef, getCoordinates } = useComponentCoordinates();
   const isMountedRef = React.useRef(false);
+
+  console.log(parseHazards(), 'HAZARDS');
+
+  // const changeLocation1 = () => {
+  //   setUserLocation(location1);
+  // };
+  // const changeLocation2 = () => {
+  //   setUserLocation(location2);
+  // };
+  // const changeLocation3 = () => {
+  //   setUserLocation(location3);
+  // };
 
   // Get coordinates when componentRef updates
   React.useEffect(() => {
@@ -48,18 +64,26 @@ export default function Main() {
   // Fetch geolocation data
   React.useEffect(() => {
     if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (geolocation) => {
-          if (!isMountedRef.current) return; // prevent state update after unmount
-          const newLocation = {
-            lat: geolocation.coords.latitude,
-            lon: geolocation.coords.longitude,
-          };
-          setUserLocation(newLocation);
-        },
-        (error) => console.log(error),
-        { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
-      );
+      const intervalId = setInterval(() => {
+        navigator.geolocation.getCurrentPosition(
+          (geolocation) => {
+            if (!isMountedRef.current) return; // prevent state update after unmount
+            const newLocation = {
+              lat: geolocation.coords.latitude,
+              lon: geolocation.coords.longitude,
+            };
+            setUserLocation(newLocation);
+          },
+          (error) => console.log(error),
+          { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
+        );
+      }, 5000); // Update every 5 seconds
+
+      // Cleanup on unmount
+      return () => {
+        clearInterval(intervalId);
+        isMountedRef.current = false;
+      };
     }
   }, []);
 
@@ -113,7 +137,7 @@ export default function Main() {
           prevLon={prevLocation?.lon}
           setPosition={setHazardDetectorPosition}
         />
-        <TestSquare ref={componentRef} />
+        {/* <TestSquare ref={componentRef} /> */}
         <WazeMap userLat={userLocation.lat} userLon={userLocation.lon} />
       </div>
     );
