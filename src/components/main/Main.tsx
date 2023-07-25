@@ -4,7 +4,6 @@ import WazeMap from '../common/maps/WazeMap';
 import TestSquare from '../common/icons/TestSquare';
 import useComponentCoordinates from '~/functions/useComponentCoordinates';
 import handleHazardCollision from '~/functions/handleHazardCollision';
-import parseHazards from '~/functions/parseHazards';
 import Loading from '../common/icons/Loading';
 import styles from './Main.module.scss';
 
@@ -24,8 +23,6 @@ export default function Main() {
 
   const { componentRef, getCoordinates } = useComponentCoordinates();
   const isMountedRef = React.useRef(false);
-
-  console.log(parseHazards(), 'HAZARDS');
 
   // const changeLocation1 = () => {
   //   setUserLocation(location1);
