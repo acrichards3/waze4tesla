@@ -1,144 +1,57 @@
-import React from 'react';
-import DriverWatching from './driver/DriverWatching';
-import WazeMap from '../common/maps/WazeMap';
-import TestSquare from '../common/icons/TestSquare';
-import useComponentCoordinates from '~/functions/useComponentCoordinates';
-import handleHazardCollision from '~/functions/handleHazardCollision';
-import Loading from '../common/icons/Loading';
-import styles from './Main.module.scss';
+import React from "react";
+import styles from "./Main.module.scss";
+import { DriverIcon } from "./DriverIcon/DriverIcon";
+import { LoadingScreen } from "./LoadingScreen/LoadingScreen";
+import { WazeMap } from "./WazeMap/WazeMap";
+import { usePolling } from "~/hooks/usePolling";
 
-interface Location {
-  lat: number;
-  lon: number;
+interface Coordinates {
+  latitude: number;
+  longitude: number;
 }
 
-export default function Main() {
-  // const location1 = { lat: 35.967281, lon: -79.056969 };
-  // const location2 = { lat: 35.966545, lon: -79.057515 };
-  // const location3 = { lat: 35.966154, lon: -79.058889 };
-  const [userLocation, setUserLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
-  const [prevLocation, setPrevLocation] = React.useState<Location | undefined>(undefined); // prettier-ignore
-  const [hazardDetectorPosition, setHazardDetectorPosition] = React.useState<{x: number; y: number;}>({ x: 0, y: 0 }); // prettier-ignore
-  const [iconPositions, setIconPositions] = React.useState<{ x: number; y: number }[]>([{ x: 0, y: 0 }]); // prettier-ignore
+export const Main: React.FC = () => {
+  const [position, setPosition] = React.useState<{ current: Coordinates; previous: Coordinates } | null>(null);
 
-  const { componentRef, getCoordinates } = useComponentCoordinates();
-  const isMountedRef = React.useRef(false);
-
-  // const changeLocation1 = () => {
-  //   setUserLocation(location1);
-  // };
-  // const changeLocation2 = () => {
-  //   setUserLocation(location2);
-  // };
-  // const changeLocation3 = () => {
-  //   setUserLocation(location3);
-  // };
-
-  // Get coordinates when componentRef updates
-  React.useEffect(() => {
-    isMountedRef.current = true;
-    const handleGetCooridinates = () => {
-      const coordinates = getCoordinates();
-      if (
-        coordinates &&
-        (iconPositions[0]?.x !== coordinates.x ||
-          iconPositions[0]?.y !== coordinates.y)
-      ) {
-        setIconPositions([coordinates]);
-      }
-    };
-
-    if (componentRef.current) {
-      handleGetCooridinates();
-    }
-
-    // Cleanup on unmount
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, [getCoordinates, componentRef]);
-
-  // Fetch geolocation data
-  React.useEffect(() => {
-    if ('geolocation' in navigator) {
-      const intervalId = setInterval(() => {
-        navigator.geolocation.getCurrentPosition(
-          (geolocation) => {
-            if (!isMountedRef.current) return; // prevent state update after unmount
-            const newLocation = {
-              lat: geolocation.coords.latitude,
-              lon: geolocation.coords.longitude,
+  usePolling({
+    callback: () => {
+      navigator.geolocation.getCurrentPosition(
+        (positionResult) => {
+          const { latitude, longitude } = positionResult.coords;
+          setPosition((prev) => {
+            if (prev == null) {
+              return {
+                current: { latitude, longitude },
+                previous: { latitude, longitude },
+              };
+            }
+            return {
+              current: { latitude, longitude },
+              previous: prev.current,
             };
-            setUserLocation(newLocation);
-          },
-          (error) => console.log(error),
-          { enableHighAccuracy: true, maximumAge: 10000, timeout: 5000 }
-        );
-      }, 5000); // Update every 5 seconds
-
-      // Cleanup on unmount
-      return () => {
-        clearInterval(intervalId);
-        isMountedRef.current = false;
-      };
-    }
-  }, []);
-
-  // Update previous location when user location changes
-  React.useEffect(() => {
-    setPrevLocation(userLocation);
-  }, [userLocation]);
-
-  // Detect collisions
-  React.useEffect(() => {
-    let prevIconPositions = iconPositions;
-    let prevHazardDetectorPosition = hazardDetectorPosition;
-
-    iconPositions.forEach((currIcon) => {
-      if (!currIcon) return;
-      const collisionDetected = handleHazardCollision(
-        {
-          x: currIcon.x,
-          y: currIcon.y,
-          width: 30,
-          height: 30,
+          });
         },
-        {
-          x: hazardDetectorPosition.x,
-          y: hazardDetectorPosition.y,
-          width: 100,
-          height: 500,
+        (error) => {
+          console.error("Error getting current position:", error);
         }
       );
+    },
+    intervalMs: 5000,
+  });
 
-      // Only update state if collision is detected and position has changed
-      if (
-        collisionDetected &&
-        (prevIconPositions !== iconPositions ||
-          prevHazardDetectorPosition !== hazardDetectorPosition)
-      ) {
-        prevIconPositions = iconPositions;
-        prevHazardDetectorPosition = hazardDetectorPosition;
-      }
-    });
-  }, [iconPositions, hazardDetectorPosition]);
+  if (position == null) return <LoadingScreen />;
 
-  // Render components
-  if (userLocation) {
-    return (
-      <div className={styles.container}>
-        <DriverWatching
-          currLat={userLocation.lat}
-          currLon={userLocation.lon}
-          prevLat={prevLocation?.lat}
-          prevLon={prevLocation?.lon}
-          setPosition={setHazardDetectorPosition}
-        />
-        {/* <TestSquare ref={componentRef} /> */}
-        <WazeMap userLat={userLocation.lat} userLon={userLocation.lon} />
-      </div>
-    );
-  }
+  console.log(position);
 
-  return <Loading />;
-}
+  return (
+    <div className={styles.container}>
+      <DriverIcon />
+      <WazeMap
+        currentLat={position.current.latitude}
+        currentLon={position.current.longitude}
+        previousLat={position.previous.latitude}
+        previousLon={position.previous.longitude}
+      />
+    </div>
+  );
+};

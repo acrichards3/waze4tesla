@@ -1,0 +1,18 @@
+@import "../../../styles//Variables.scss";
+
+.driverIcon {
+  display: flex;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 15px 30px 15px;
+  border-color: transparent transparent $driver-red transparent;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: 2000ms ease-in-out;
+  z-index: 9999;
+  pointer-events: none;
+}
