@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Main.module.scss";
 import { DriverIcon } from "./DriverIcon/DriverIcon";
+import { HazardScanner } from "./HazardScanner/HazardScanner";
 import { LoadingScreen } from "./LoadingScreen/LoadingScreen";
 import { WazeMap } from "./WazeMap/WazeMap";
 import { usePolling } from "~/hooks/usePolling";
@@ -41,10 +42,9 @@ export const Main: React.FC = () => {
 
   if (position == null) return <LoadingScreen />;
 
-  console.log(position);
-
   return (
     <div className={styles.container}>
+      <HazardScanner />
       <DriverIcon />
       <WazeMap
         currentLat={position.current.latitude}

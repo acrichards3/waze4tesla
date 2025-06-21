@@ -1,0 +1,18 @@
+@import "../../../styles/Variables.scss";
+
+.hazardScanArea {
+  display: flex;
+  position: absolute;
+  width: 100px;
+  height: 500px;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -100%);
+  transition: 2000ms ease-in-out;
+  z-index: 9999;
+  pointer-events: none;
+
+  background-color: lime;
+  opacity: 0.01;
+}

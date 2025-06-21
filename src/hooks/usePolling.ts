@@ -1,22 +1,22 @@
 import React from "react";
 
 interface UsePollingParams {
-  callback: () => void;
+  callback: () => void | Promise<void>;
   intervalMs: number;
 }
 
 export function usePolling({ callback, intervalMs }: UsePollingParams): void {
-  const savedCallback = React.useRef<() => void>(callback);
+  const savedCallback = React.useRef<() => void | Promise<void>>(callback);
 
   React.useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
   React.useEffect(() => {
-    savedCallback.current();
+    void savedCallback.current();
 
     const id = setInterval(() => {
-      savedCallback.current();
+      void savedCallback.current();
     }, intervalMs);
 
     return () => clearInterval(id);
