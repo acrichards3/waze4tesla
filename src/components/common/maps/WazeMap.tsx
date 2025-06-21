@@ -10,8 +10,8 @@ export default function WazeMap(props: WazeMapProps) {
     <iframe
       id="wazeMap"
       src={`https://embed.waze.com/iframe?zoom=14&lat=${props.userLat}&lon=${props.userLon}`}
-      width="100%"
-      height="100%"
+      width={"100%"}
+      height={"100%"}
     ></iframe>
   );
 }
