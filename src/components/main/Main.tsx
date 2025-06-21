@@ -20,15 +20,9 @@ export const Main: React.FC = () => {
         (positionResult) => {
           const { latitude, longitude } = positionResult.coords;
           setPosition((prev) => {
-            if (prev == null) {
-              return {
-                current: { latitude, longitude },
-                previous: { latitude, longitude },
-              };
-            }
             return {
               current: { latitude, longitude },
-              previous: prev.current,
+              previous: prev?.current ?? { latitude, longitude },
             };
           });
         },
