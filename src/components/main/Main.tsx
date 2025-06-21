@@ -36,7 +36,7 @@ export const Main: React.FC = () => {
         }
       );
     },
-    intervalMs: 5000,
+    intervalMs: 8000,
   });
 
   if (position == null) return <LoadingScreen />;
