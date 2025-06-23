@@ -18,8 +18,8 @@ export const WazeMap: React.FC<WazeMapProps> = (props) => {
       <iframe
         id="wazeMap"
         src={`https://embed.waze.com/iframe?zoom=14&lat=${props.currentLat}&lon=${props.currentLon}`}
-        width={"10000px"}
-        height={"10000px"}
+        width={"5000px"}
+        height={"5000px"}
       ></iframe>
     </div>
   );
