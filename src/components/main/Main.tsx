@@ -31,7 +31,7 @@ export const Main: React.FC = () => {
         }
       );
     },
-    intervalMs: 15000,
+    intervalMs: position == null ? 1000 : 15000,
   });
 
   if (position == null) return <LoadingScreen />;
