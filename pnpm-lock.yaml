@@ -44,6 +44,9 @@ importers:
       sass:
         specifier: ^1.64.1
         version: 1.89.2
+      suncalc:
+        specifier: ^1.9.0
+        version: 1.9.0
       superjson:
         specifier: 1.12.2
         version: 1.12.2
@@ -63,6 +66,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.4
         version: 18.3.7(@types/react@18.3.23)
+      '@types/suncalc':
+        specifier: ^1.9.2
+        version: 1.9.2
       '@typescript-eslint/eslint-plugin':
         specifier: 6.0.0
         version: 6.0.0(@typescript-eslint/parser@6.0.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)
@@ -474,6 +480,9 @@ packages:
 
   '@types/stylis@4.2.5':
     resolution: {integrity: sha512-1Xve+NMN7FWjY14vLoY5tL3BVEQ/n42YLwaqJIPYhotZ9uBHt87VceMwWQpzmdEt2TNXIorIFG+YeCUUW7RInw==}
+
+  '@types/suncalc@1.9.2':
+    resolution: {integrity: sha512-ATAGBHHfA1TlE2tjfidLyTcysjoT2JHHEAmWRULh73SU9UTn++j5fqHEW16X6Y/2Li87jEQXzgu4R/OOdlDqzw==}
 
   '@typescript-eslint/eslint-plugin@6.0.0':
     resolution: {integrity: sha512-xuv6ghKGoiq856Bww/yVYnXGsKa588kY3M0XK7uUW/3fJNNULKRfZfSBkMTSpqGG/8ZCXCadfh8G/z/B4aqS/A==}
@@ -1765,6 +1774,9 @@ packages:
   stylis@4.3.2:
     resolution: {integrity: sha512-bhtUjWd/z6ltJiQwg0dUfxEJ+W+jdqQd8TbWLWyeIJHlnsqmGLRFFd8e5mA0AZi/zx90smXRlN66YMTcaSFifg==}
 
+  suncalc@1.9.0:
+    resolution: {integrity: sha512-vMJ8Byp1uIPoj+wb9c1AdK4jpkSKVAywgHX0lqY7zt6+EWRRC3Z+0Ucfjy/0yxTVO1hwwchZe4uoFNqrIC24+A==}
+
   superjson@1.12.2:
     resolution: {integrity: sha512-ugvUo9/WmvWOjstornQhsN/sR9mnGtWGYeTxFuqLb4AiT4QdUavjGFRALCPKWWnAiUJ4HTpytj5e0t5HoMRkXg==}
     engines: {node: '>=10'}
@@ -2281,6 +2293,8 @@ snapshots:
   '@types/semver@7.7.0': {}
 
   '@types/stylis@4.2.5': {}
+
+  '@types/suncalc@1.9.2': {}
 
   '@typescript-eslint/eslint-plugin@6.0.0(@typescript-eslint/parser@6.0.0(eslint@8.57.1)(typescript@5.8.3))(eslint@8.57.1)(typescript@5.8.3)':
     dependencies:
@@ -3801,6 +3815,8 @@ snapshots:
       '@babel/core': 7.27.4
 
   stylis@4.3.2: {}
+
+  suncalc@1.9.0: {}
 
   superjson@1.12.2:
     dependencies:

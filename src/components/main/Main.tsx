@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Main.module.scss";
+import { DarkOverlay } from "./DarkOverlay/DarkOverlay";
 import { DriverIcon } from "./DriverIcon/DriverIcon";
 import { HazardScanner } from "./HazardScanner/HazardScanner";
 import { LoadingScreen } from "./LoadingScreen/LoadingScreen";
@@ -37,15 +38,18 @@ export const Main: React.FC = () => {
   if (position == null) return <LoadingScreen />;
 
   return (
-    <div className={styles.container}>
-      <HazardScanner />
-      <DriverIcon />
-      <WazeMap
-        currentLat={position.current.latitude}
-        currentLon={position.current.longitude}
-        previousLat={position.previous.latitude}
-        previousLon={position.previous.longitude}
-      />
-    </div>
+    <>
+      <DarkOverlay currentLat={position.current.latitude} currentLon={position.current.longitude} />
+      <div className={styles.container}>
+        <HazardScanner />
+        <DriverIcon />
+        <WazeMap
+          currentLat={position.current.latitude}
+          currentLon={position.current.longitude}
+          previousLat={position.previous.latitude}
+          previousLon={position.previous.longitude}
+        />
+      </div>
+    </>
   );
 };
