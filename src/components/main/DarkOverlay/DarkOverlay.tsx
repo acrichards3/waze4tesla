@@ -9,7 +9,7 @@ interface DarkOverlayProps {
 }
 
 const TRANSITION_DURATION_MS = 45 * 60 * 1000; // 45 minutes
-const MAX_OPACITY = 0.8;
+const MAX_OPACITY = 0.6;
 const UPDATE_INTERVAL_MS = 60 * 1000; // Update every minute
 
 export const DarkOverlay: React.FC<DarkOverlayProps> = (props) => {
