@@ -17,7 +17,7 @@ export const WazeMap: React.FC<WazeMapProps> = (props) => {
     <div className={styles.container} style={{ transform: `rotate(${adjustedAngle}deg)` }}>
       <iframe
         id="wazeMap"
-        src={`https://embed.waze.com/iframe?zoom=14&lat=${props.currentLat}&lon=${props.currentLon}`}
+        src={`/waze-embed/iframe?zoom=13&lat=${props.currentLat}&lon=${props.currentLon}`}
         width={"2000px"}
         height={"2000px"}
       ></iframe>

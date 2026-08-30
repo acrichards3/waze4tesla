@@ -9,7 +9,7 @@ export const LoadingScreen: React.FC = () => {
       <div className={styles.logoContainer}>
         <Image priority className={styles.logo} alt="logo" src="/images/waze4TeslaLogo.png" width={200} height={50} />
       </div>
-      <strong className={styles.text}>Gathering your location...</strong>
+      <strong className={styles.text}>Awaiting your location...</strong>
       <div className={styles.loader}>
         <Loader />
       </div>

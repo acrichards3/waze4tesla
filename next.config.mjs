@@ -18,6 +18,18 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+
+  // ponytail: Waze's iframe needs a first-party visitor cookie; Chrome blocks it cross-site.
+  // Proxy embed.waze.com through our origin so LivemapConfig stops 400ing.
+  async rewrites() {
+    return [
+      { source: "/waze-embed/:path*", destination: "https://embed.waze.com/:path*" },
+      { source: "/api/config/:path*", destination: "https://embed.waze.com/api/config/:path*" },
+      { source: "/web-events", destination: "https://embed.waze.com/web-events" },
+      { source: "/web-events/:path*", destination: "https://embed.waze.com/web-events/:path*" },
+      { source: "/web_api/:path*", destination: "https://embed.waze.com/web_api/:path*" },
+    ];
+  },
 };
 
 export default config;
