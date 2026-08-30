@@ -29,7 +29,7 @@ export const Main: React.FC = () => {
         },
         (error) => {
           console.error("Error getting current position:", error);
-        }
+        },
       );
     },
     intervalMs: position == null ? 1000 : 10000,
