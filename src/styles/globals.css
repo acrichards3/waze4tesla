@@ -10,6 +10,15 @@ main {
     sans-serif;
   height: 100%;
   width: 100%;
+  background: #fff;
+}
+
+html.night,
+html.night body,
+html.night #__next,
+html.night main {
+  background: #000;
+  color: #c8c8c8;
 }
 
 a {

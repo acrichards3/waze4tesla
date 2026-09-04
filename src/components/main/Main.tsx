@@ -4,6 +4,7 @@ import { DriverIcon } from "./DriverIcon/DriverIcon";
 import { HazardScanner } from "./HazardScanner/HazardScanner";
 import { LoadingScreen } from "./LoadingScreen/LoadingScreen";
 import { WazeMap } from "./WazeMap/WazeMap";
+import { persistNightState, useNightDarkness } from "~/hooks/useNightDarkness";
 import { usePolling } from "~/hooks/usePolling";
 
 interface Coordinates {
@@ -13,6 +14,11 @@ interface Coordinates {
 
 export const Main: React.FC = () => {
   const [position, setPosition] = React.useState<{ current: Coordinates; previous: Coordinates } | null>(null);
+  const darkness = useNightDarkness(position?.current.latitude, position?.current.longitude);
+
+  React.useEffect(() => {
+    persistNightState(darkness, position?.current.latitude, position?.current.longitude);
+  }, [darkness, position]);
 
   usePolling({
     callback: () => {
@@ -45,6 +51,7 @@ export const Main: React.FC = () => {
         currentLon={position.current.longitude}
         previousLat={position.previous.latitude}
         previousLon={position.previous.longitude}
+        darkness={darkness}
       />
     </div>
   );

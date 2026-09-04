@@ -29,3 +29,7 @@
   height: 100%;
   opacity: 0.15;
 }
+
+:global(html.night) .imageContainer {
+  filter: invert(1) hue-rotate(180deg);
+}
