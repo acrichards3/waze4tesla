@@ -17,8 +17,7 @@ export const WazeMap: React.FC<WazeMapProps> = (props) => {
   const angle = Math.atan2(currentLat - previousLat, currentLon - previousLon) * (180 / Math.PI);
   const mapAngle = angle < 0 ? angle + 360 : angle;
   const adjustedAngle = (mapAngle - 90) % 360;
-  const filter =
-    darkness > 0 ? `invert(${darkness}) hue-rotate(${darkness * 180}deg)` : undefined;
+  const filter = darkness > 0 ? `invert(${darkness}) hue-rotate(${darkness * 180}deg)` : undefined;
 
   return (
     <div className={styles.container} style={{ transform: `rotate(${adjustedAngle}deg) scale(${SCALE})` }}>

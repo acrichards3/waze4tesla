@@ -5,8 +5,18 @@ main {
   display: flex;
   padding: 0;
   margin: 0;
-  font-family: 'Roboto Condensed', -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+  font-family:
+    "Roboto Condensed",
+    -apple-system,
+    BlinkMacSystemFont,
+    Segoe UI,
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    Fira Sans,
+    Droid Sans,
+    Helvetica Neue,
     sans-serif;
   height: 100%;
   width: 100%;

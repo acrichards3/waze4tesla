@@ -21,10 +21,24 @@ export function computeNightDarkness(now: Date, lat: number, lon: number): numbe
   return remaining < TRANSITION_DURATION_MS ? remaining / TRANSITION_DURATION_MS : 1;
 }
 
-function storedCoords(): { lat: number; lon: number } | null {
+interface StoredCoords {
+  lat: number;
+  lon: number;
+}
+
+function isStoredCoords(value: unknown): value is StoredCoords {
+  if (typeof value !== "object" || value === null) return false;
+  if (!("lat" in value) || !("lon" in value)) return false;
+  return typeof value.lat === "number" && typeof value.lon === "number";
+}
+
+function storedCoords(): StoredCoords | null {
   if (typeof window === "undefined") return null;
+  const raw = localStorage.getItem(COORDS_KEY);
+  if (raw === null) return null;
   try {
-    return JSON.parse(localStorage.getItem(COORDS_KEY) || "null");
+    const parsed: unknown = JSON.parse(raw);
+    return isStoredCoords(parsed) ? parsed : null;
   } catch {
     return null;
   }
@@ -50,7 +64,7 @@ export function useNightDarkness(lat?: number, lon?: number): number {
   return computeNightDarkness(now, useLat, useLon);
 }
 
-export function persistNightState(darkness: number, lat?: number, lon?: number) {
+export function persistNightState(darkness: number, lat?: number, lon?: number): void {
   if (typeof window === "undefined") return;
   document.documentElement.classList.toggle("night", darkness > 0);
   localStorage.setItem(NIGHT_KEY, darkness > 0 ? "1" : "0");
