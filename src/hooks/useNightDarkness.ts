@@ -2,23 +2,13 @@ import React from "react";
 import SunCalc from "suncalc";
 import { usePolling } from "~/hooks/usePolling";
 
-const TRANSITION_DURATION_MS = 45 * 60 * 1000;
 const UPDATE_INTERVAL_MS = 60 * 1000;
 const COORDS_KEY = "w4t-coords";
 const NIGHT_KEY = "w4t-night";
 
 export function computeNightDarkness(now: Date, lat: number, lon: number): number {
   const { sunrise, sunset } = SunCalc.getTimes(now, lat, lon);
-
-  if (now >= sunrise && now <= sunset) return 0;
-
-  if (now > sunset) {
-    const elapsed = now.getTime() - sunset.getTime();
-    return elapsed < TRANSITION_DURATION_MS ? elapsed / TRANSITION_DURATION_MS : 1;
-  }
-
-  const remaining = sunrise.getTime() - now.getTime();
-  return remaining < TRANSITION_DURATION_MS ? remaining / TRANSITION_DURATION_MS : 1;
+  return now >= sunrise && now <= sunset ? 0 : 1;
 }
 
 interface StoredCoords {
